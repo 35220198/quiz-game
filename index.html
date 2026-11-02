@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080c19">
+  <meta name="description" content="Quiz Arena — think fast, play smart and beat your personal best.">
+  <title>Quiz Arena | Think. Play. Conquer.</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./scripts.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-orange" aria-hidden="true"></div>
+  <div class="ambient ambient-purple" aria-hidden="true"></div>
+  <div class="ambient ambient-blue" aria-hidden="true"></div>
+  <div class="background-grid" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <div class="quiz-card">
+      <div class="top-accent" aria-hidden="true"></div>
+
+      <header class="brand-row">
+        <a class="brand" href="#home" aria-label="Quiz Arena home">
+          <span class="brand-mark">Q<span>!</span></span>
+          <span class="brand-copy">
+            <strong>QUIZ ARENA</strong>
+            <small>THINK · PLAY · CONQUER</small>
+          </span>
+        </a>
+        <div class="header-actions">
+          <button class="icon-button" id="sound-btn" type="button" aria-label="Turn sound on" aria-pressed="false" title="Toggle sound">♫</button>
+          <div class="best-score-pill"><span aria-hidden="true">★</span><span>BEST</span><strong id="best-score">—</strong></div>
+        </div>
+      </header>
+
+      <!-- START SCREEN -->
+      <section class="screen start-screen active" id="start-screen" aria-labelledby="start-title">
+        <div class="eyebrow"><span class="status-dot"></span> THE ULTIMATE KNOWLEDGE CHALLENGE</div>
+        <h1 id="start-title">Ready to rise<br>to the <span class="gradient-text">challenge?</span></h1>
+        <p class="hero-description">Trust your instincts, think fast and show what you know. Every question is a new chance to climb the leaderboard — starting with your own personal best.</p>
+
+        <div class="feature-grid">
+          <div class="feature-card"><strong>10</strong><span>Quick rounds</span><small>Fast-paced questions</small></div>
+          <div class="feature-card"><strong>◷</strong><span>Beat the clock</span><small>Race against time</small></div>
+          <div class="feature-card"><strong>✦</strong><span>Learn as you play</span><small>Instant explanations</small></div>
+        </div>
+
+        <div class="setup-panel">
+          <div class="setup-heading"><strong>MAKE IT YOUR GAME</strong><span>Choose your challenge</span></div>
+          <div class="setup-controls">
+            <label class="field-label" for="category">
+              Category
+              <select id="category">
+                <option value="all">All categories</option>
+                <option value="KENYA">Kenya</option>
+                <option value="SCIENCE">Science</option>
+                <option value="TECHNOLOGY">Technology</option>
+                <option value="GEOGRAPHY">Geography</option>
+                <option value="GENERAL KNOWLEDGE">General Knowledge</option>
+                <option value="NATURE">Nature</option>
+              </select>
+            </label>
+            <label class="field-label" for="difficulty">
+              Difficulty
+              <select id="difficulty">
+                <option value="easy">Easy — 20 seconds</option>
+                <option value="medium" selected>Medium — 15 seconds</option>
+                <option value="hard">Hard — 10 seconds</option>
+              </select>
+            </label>
+          </div>
+          <div class="setup-bottom">
+            <p class="available-count"><span class="live-dot"></span><strong id="available">10</strong> questions in this round</p>
+            <button class="primary-btn start-btn" id="start-btn" type="button">Start the challenge <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <p class="microcopy">No sign-up. No pressure. Just you versus the questions.</p>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section class="screen game-screen" id="quiz-screen" aria-labelledby="question">
+        <div class="game-topline">
+          <div class="category-label"><span aria-hidden="true">◆</span><span id="current-category">GENERAL KNOWLEDGE</span></div>
+          <div class="timer" id="timer-box"><span aria-hidden="true">◷</span><strong id="time">15</strong><small>SEC</small></div>
+        </div>
+
+        <div class="progress-area">
+          <div class="progress-meta">
+            <span>QUESTION <strong id="current">01</strong> <span class="muted">/</span> <strong id="total">10</strong></span>
+            <span>SCORE <strong id="score" class="score-value">0</strong></span>
+          </div>
+          <div class="progress-track" id="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="question-area">
+          <span class="question-kicker"><span></span> YOUR NEXT CHALLENGE</span>
+          <h2 id="question" tabindex="-1">Question goes here</h2>
+          <p class="question-tip">Choose the best answer from the options below.</p>
+        </div>
+
+        <div class="answers-grid" id="answers"></div>
+
+        <div class="feedback" id="feedback" aria-live="polite" hidden>
+          <span class="feedback-icon" id="feedback-icon" aria-hidden="true">✓</span>
+          <div class="feedback-copy"><strong id="feedback-title"></strong><p id="feedback-text"></p></div>
+        </div>
+
+        <div class="game-actions">
+          <p class="game-hint">✦ Stay sharp. Your next question is waiting.</p>
+          <button class="primary-btn next-btn" id="next-btn" type="button" hidden>Next question <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <!-- RESULTS SCREEN -->
+      <section class="screen result-screen" id="results-screen" aria-labelledby="result-heading">
+        <div class="result-heading">
+          <div class="eyebrow"><span class="status-dot"></span> CHALLENGE COMPLETE</div>
+          <h1 id="result-heading">Look at you.<br><span class="gradient-text">That was a run.</span></h1>
+          <p>Here's how you did. Every round makes you sharper.</p>
+        </div>
+
+        <div class="result-main">
+          <div class="score-ring" id="score-circle" style="--score-angle: 0deg">
+            <div class="score-ring-inner"><strong id="percentage">0%</strong><span>ACCURACY</span></div>
+          </div>
+          <div class="result-summary">
+            <span class="summary-label">YOUR PERFORMANCE</span>
+            <h2 id="result-title">Good effort!</h2>
+            <p id="result-text">Every great player starts somewhere. Ready for another round?</p>
+            <div class="result-badges"><span id="result-category" class="result-badge">ALL CATEGORIES</span><span id="result-pace" class="result-badge">MEDIUM PACE</span></div>
+          </div>
+        </div>
+
+        <div class="result-stats">
+          <div class="result-stat"><span class="stat-label">YOUR SCORE</span><strong id="final-score">0/10</strong></div>
+          <div class="result-stat"><span class="stat-label">TIME TAKEN</span><strong id="time-taken">00:00</strong></div>
+          <div class="result-stat"><span class="stat-label">PERSONAL BEST</span><strong id="best-result">—</strong></div>
+        </div>
+
+        <div class="review-section">
+          <div class="review-heading"><div><h2>Answer replay</h2><p>See what you got right and what to learn next.</p></div><span class="review-count" id="review-count">0 to review</span></div>
+          <div class="review-list" id="review-list"></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="primary-btn" id="restart-btn" type="button">Play again <span aria-hidden="true">↻</span></button>
+          <button class="secondary-btn" id="home-btn" type="button">Back to home</button>
+        </div>
+      </section>
+
+      <footer class="app-footer"><span>QUIZ ARENA © <span id="year"></span></span><span>BUILT FOR CURIOUS MINDS <b>✦</b></span></footer>
+    </div>
+    <p class="outside-caption">A LITTLE KNOWLEDGE. A LOT OF COMPETITION.</p>
+  </main>
+</body>
+</html>
