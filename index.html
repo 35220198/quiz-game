@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080c19">
-  <meta name="description" content="Quiz Arena — think fast, play smart and beat your personal best.">
-  <title>Quiz Arena | Think. Play. Conquer.</title>
+  <title>Quiz Arena | Life Approval Edition</title>
   <link rel="stylesheet" href="./styles.css">
-  <script src="./scripts.js" defer></script>
 </head>
 <body>
   <div class="ambient ambient-orange" aria-hidden="true"></div>
@@ -28,36 +25,36 @@
           </span>
         </a>
         <div class="header-actions">
-          <button class="icon-button" id="sound-btn" type="button" aria-label="Turn sound on" aria-pressed="false" title="Toggle sound">♫</button>
+          <button class="icon-button" id="sound-btn" type="button" aria-label="Toggle sound" aria-pressed="false" title="Toggle sound">♫</button>
           <div class="best-score-pill"><span aria-hidden="true">★</span><span>BEST</span><strong id="best-score">—</strong></div>
         </div>
       </header>
 
       <!-- START SCREEN -->
       <section class="screen start-screen active" id="start-screen" aria-labelledby="start-title">
-        <div class="eyebrow"><span class="status-dot"></span> THE ULTIMATE KNOWLEDGE CHALLENGE</div>
-        <h1 id="start-title">Ready to rise<br>to the <span class="gradient-text">challenge?</span></h1>
-        <p class="hero-description">Trust your instincts, think fast and show what you know. Every question is a new chance to climb the leaderboard — starting with your own personal best.</p>
+        <div class="eyebrow"><span class="status-dot"></span> THE ULTIMATE LIFE APPROVAL CHALLENGE</div>
+        <h1 id="start-title">Ready to rise<br>to the <span class="gradient-text">radiance?</span></h1>
+        <p class="hero-description">Embark on a soulful journey to awaken deep self-approval, celebrate your resilience, and illuminate your path forward.</p>
 
         <div class="feature-grid">
-          <div class="feature-card"><strong>10</strong><span>Quick rounds</span><small>Fast-paced questions</small></div>
+          <div class="feature-card"><strong>10</strong><span>Soulful rounds</span><small>Life-affirming questions</small></div>
           <div class="feature-card"><strong>◷</strong><span>Beat the clock</span><small>Race against time</small></div>
-          <div class="feature-card"><strong>✦</strong><span>Learn as you play</span><small>Instant explanations</small></div>
+          <div class="feature-card"><strong>✦</strong><span>Mindful insights</span><small>Instant reflections</small></div>
         </div>
 
         <div class="setup-panel">
-          <div class="setup-heading"><strong>MAKE IT YOUR GAME</strong><span>Choose your challenge</span></div>
+          <div class="setup-heading"><strong>MAKE IT YOUR JOURNEY</strong><span>Choose your reflection focus</span></div>
           <div class="setup-controls">
             <label class="field-label" for="category">
               Category
               <select id="category">
                 <option value="all">All categories</option>
-                <option value="KENYA">Kenya</option>
-                <option value="SCIENCE">Science</option>
-                <option value="TECHNOLOGY">Technology</option>
-                <option value="GEOGRAPHY">Geography</option>
-                <option value="GENERAL KNOWLEDGE">General Knowledge</option>
-                <option value="NATURE">Nature</option>
+                <option value="SELF-LOVE">Self-Love</option>
+                <option value="RESILIENCE">Resilience</option>
+                <option value="BOUNDARIES">Boundaries</option>
+                <option value="PURPOSE">Purpose</option>
+                <option value="MINDFULNESS">Mindfulness</option>
+                <option value="GROWTH">Growth</option>
               </select>
             </label>
             <label class="field-label" for="difficulty">
@@ -74,13 +71,13 @@
             <button class="primary-btn start-btn" id="start-btn" type="button">Start the challenge <span aria-hidden="true">→</span></button>
           </div>
         </div>
-        <p class="microcopy">No sign-up. No pressure. Just you versus the questions.</p>
+        <p class="microcopy">No sign-up. No pressure. Just your spirit meeting your growth.</p>
       </section>
 
       <!-- QUIZ SCREEN -->
       <section class="screen game-screen" id="quiz-screen" aria-labelledby="question">
         <div class="game-topline">
-          <div class="category-label"><span aria-hidden="true">◆</span><span id="current-category">GENERAL KNOWLEDGE</span></div>
+          <div class="category-label"><span aria-hidden="true">◆</span><span id="current-category">SELF-LOVE</span></div>
           <div class="timer" id="timer-box"><span aria-hidden="true">◷</span><strong id="time">15</strong><small>SEC</small></div>
         </div>
 
@@ -95,9 +92,9 @@
         </div>
 
         <div class="question-area">
-          <span class="question-kicker"><span></span> YOUR NEXT CHALLENGE</span>
+          <span class="question-kicker"><span></span> YOUR NEXT REFLECTION</span>
           <h2 id="question" tabindex="-1">Question goes here</h2>
-          <p class="question-tip">Choose the best answer from the options below.</p>
+          <p class="question-tip">Trust your inner voice and choose the answer that aligns with your highest growth.</p>
         </div>
 
         <div class="answers-grid" id="answers"></div>
@@ -108,7 +105,7 @@
         </div>
 
         <div class="game-actions">
-          <p class="game-hint">✦ Stay sharp. Your next question is waiting.</p>
+          <p class="game-hint">✦ Stay centered. Your next insight is waiting.</p>
           <button class="primary-btn next-btn" id="next-btn" type="button" hidden>Next question <span aria-hidden="true">→</span></button>
         </div>
       </section>
@@ -117,8 +114,8 @@
       <section class="screen result-screen" id="results-screen" aria-labelledby="result-heading">
         <div class="result-heading">
           <div class="eyebrow"><span class="status-dot"></span> CHALLENGE COMPLETE</div>
-          <h1 id="result-heading">Look at you.<br><span class="gradient-text">That was a run.</span></h1>
-          <p>Here's how you did. Every round makes you sharper.</p>
+          <h1 id="result-heading">Look at your light.<br><span class="gradient-text">That was a powerful run.</span></h1>
+          <p>Here is your life approval breakdown. Every reflection makes you shine brighter.</p>
         </div>
 
         <div class="result-main">
@@ -127,8 +124,8 @@
           </div>
           <div class="result-summary">
             <span class="summary-label">YOUR PERFORMANCE</span>
-            <h2 id="result-title">Good effort!</h2>
-            <p id="result-text">Every great player starts somewhere. Ready for another round?</p>
+            <h2 id="result-title">Radiant Soul</h2>
+            <p id="result-text">You radiate deep self-approval, emotional resilience, and authentic grace.</p>
             <div class="result-badges"><span id="result-category" class="result-badge">ALL CATEGORIES</span><span id="result-pace" class="result-badge">MEDIUM PACE</span></div>
           </div>
         </div>
@@ -140,7 +137,7 @@
         </div>
 
         <div class="review-section">
-          <div class="review-heading"><div><h2>Answer replay</h2><p>See what you got right and what to learn next.</p></div><span class="review-count" id="review-count">0 to review</span></div>
+          <div class="review-heading"><div><h2>Reflection replay</h2><p>Review your answers and anchor your insights.</p></div><span class="review-count" id="review-count">0 to review</span></div>
           <div class="review-list" id="review-list"></div>
         </div>
 
@@ -150,9 +147,10 @@
         </div>
       </section>
 
-      <footer class="app-footer"><span>QUIZ ARENA © <span id="year"></span></span><span>BUILT FOR CURIOUS MINDS <b>✦</b></span></footer>
+      <footer class="app-footer"><span>QUIZ ARENA © <span id="year"></span></span><span>BUILT FOR RADIANT MINDS <b>✦</b></span></footer>
     </div>
-    <p class="outside-caption">A LITTLE KNOWLEDGE. A LOT OF COMPETITION.</p>
   </main>
+
+  <script src="./scripts.js"></script>
 </body>
 </html>
