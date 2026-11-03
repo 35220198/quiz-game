@@ -1,65 +1,44 @@
 "use strict";
 
-/* =========================================================
-   QUIZ ARENA — GAME ENGINE
-   Filename: scripts.js
-========================================================= */
-
 const CONFIG = {
   questionsPerRound: 10,
   secondsPerQuestion: { easy: 20, medium: 15, hard: 10 },
-  storageKey: "quizArenaBestScoreV4"
+  storageKey: "quizArenaLifeApprovalBestV5"
 };
 
-/* Question bank: 24 questions across six categories. */
 const QUESTIONS = [
-  { category: "KENYA", question: "Which city is the capital of Kenya?", answers: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], correct: 1, explanation: "Nairobi is the capital of Kenya and its largest city." },
-  { category: "KENYA", question: "What is the highest mountain in Kenya?", answers: ["Mount Elgon", "Mount Longonot", "Mount Kenya", "Mount Kilimanjaro"], correct: 2, explanation: "Mount Kenya is the country's highest mountain. Its tallest peak, Batian, reaches 5,199 metres." },
-  { category: "KENYA", question: "What is the official currency of Kenya?", answers: ["Kenyan shilling", "Kenyan pound", "East African dollar", "Ugandan shilling"], correct: 0, explanation: "Kenya uses the Kenyan shilling, abbreviated KSh or KES." },
-  { category: "KENYA", question: "Which ocean borders Kenya?", answers: ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean"], correct: 2, explanation: "Kenya's southeastern coastline borders the Indian Ocean." },
+  { category: "SELF-LOVE", question: "When you reflect on a past mistake or detour, what is your primary feeling towards your former self?", answers: ["Harsh criticism and regret", "Indifference and avoidance", "Deep compassion, knowing I did my best with what I knew then", "Constant worry about repeating it"], correct: 2, explanation: "Deep compassion honors your growth and acknowledges that you always did the best you could with the awareness you had at that moment." },
+  { category: "SELF-LOVE", question: "How do you respond when you look in the mirror and acknowledge your unique presence?", answers: ["I pick apart every single perceived flaw", "I feel a warm wave of appreciation for my resilience and growth", "I avoid looking too closely", "I compare myself to impossible standards"], correct: 1, explanation: "Approaching yourself with appreciation celebrates the incredible journey your body and spirit have traveled together." },
+  { category: "SELF-LOVE", question: "What does genuine self-care mean to you in your daily rhythm?", answers: ["A luxury I must endlessly earn through exhaustion", "A non-negotiable celebration of my vitality and well-being", "A waste of productive time", "Something I only do when I collapse"], correct: 1, explanation: "Rest and self-care are essential fuel for your vitality, not rewards that must be earned through burnout." },
+  { category: "SELF-LOVE", question: "If you could give one profound approval stamp to your life right this second, what would it declare?", answers: ["I am whole, wonderfully capable, and proud of who I am becoming", "I am completely lost and unqualified", "I am waiting for permission to approve of myself", "I need everyone else's approval first"], correct: 0, explanation: "Your self-worth is inherently yours. Recognizing your wholeness empowers every step of your journey." },
 
-  { category: "SCIENCE", question: "Which planet is known as the Red Planet?", answers: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1, explanation: "Iron minerals on Mars have oxidised, giving its surface a reddish appearance." },
-  { category: "SCIENCE", question: "What is the chemical symbol for gold?", answers: ["Go", "Ag", "Au", "Gd"], correct: 2, explanation: "Au is the chemical symbol for gold, from the Latin word aurum." },
-  { category: "SCIENCE", question: "What is the process by which plants make food?", answers: ["Respiration", "Photosynthesis", "Fermentation", "Evaporation"], correct: 1, explanation: "Photosynthesis uses sunlight to convert water and carbon dioxide into sugars, releasing oxygen." },
-  { category: "SCIENCE", question: "Which particle in an atom has a negative charge?", answers: ["Proton", "Neutron", "Electron", "Nucleus"], correct: 2, explanation: "Electrons carry a negative electric charge." },
+  { category: "RESILIENCE", question: "When a sudden unexpected storm disrupts your plans, what is your internal dialogue?", answers: ["Everything is ruined and I am helpless", "I trust my inner fortitude; I have navigated storms before and emerged stronger", "Blaming myself for not planning better", "Panicking with no direction"], correct: 1, explanation: "Trusting your resilience reminds you that challenges are temporary tests of strength from which you always rise." },
+  { category: "RESILIENCE", question: "How comfortable are you with celebrating your own quiet victories and personal milestones?", answers: ["I brush them off as unimportant", "I wait for someone else to validate me", "I proudly champion my own wins, knowing every step counts", "I feel uncomfortable acknowledging success"], correct: 2, explanation: "Championing your own wins builds momentum and reinforces your belief in your incredible capabilities." },
+  { category: "RESILIENCE", question: "When dealing with self-doubt or inner resistance, how do you respond?", answers: ["I surrender immediately and give up", "I answer doubt with bold action and unwavering belief in my potential", "I pretend the doubt does not exist", "I let fear dictate my choices"], correct: 1, explanation: "Action is the ultimate antidote to doubt. Stepping forward despite fear proves your inner courage." },
+  { category: "RESILIENCE", question: "How do you view unexpected detours or changes in your life path?", answers: ["As catastrophic failures", "As valuable lessons and pivot points guiding me toward alignment", "As proof that I cannot succeed", "As unfair punishments"], correct: 1, explanation: "Revising your perspective on detours turns roadblocks into stepping stones toward greater fulfillment." },
 
-  { category: "TECHNOLOGY", question: "What does HTML stand for?", answers: ["HyperText Markup Language", "HighText Machine Language", "HyperTool Multi Language", "Home Text Making Language"], correct: 0, explanation: "HTML stands for HyperText Markup Language. It structures web page content." },
-  { category: "TECHNOLOGY", question: "Which of these is a programming language?", answers: ["Photoshop", "Python", "Bluetooth", "Windows"], correct: 1, explanation: "Python is widely used in web development, automation, data science and artificial intelligence." },
-  { category: "TECHNOLOGY", question: "What does CPU stand for?", answers: ["Computer Power Utility", "Central Processing Unit", "Core Program Upload", "Central Performance User"], correct: 1, explanation: "The Central Processing Unit executes the instructions that make a computer operate." },
-  { category: "TECHNOLOGY", question: "Which company develops Android?", answers: ["Google", "Nintendo", "Adobe", "Netflix"], correct: 0, explanation: "Google develops the Android operating system." },
+  { category: "BOUNDARIES", question: "How do you view the boundaries you set in your personal and professional relationships?", answers: ["As a sacred act of self-respect protecting my inner peace", "As something I feel guilty or selfish for enforcing", "As barriers that push people away", "I rarely set boundaries at all"], correct: 0, explanation: "Boundaries are not walls; they are clear expressions of self-respect that preserve your precious energy." },
+  { category: "BOUNDARIES", question: "When someone asks too much of your time and energy, what is your immediate instinct?", answers: ["Saying yes out of guilt while resenting it internally", "Pausing to evaluate my capacity and offering a kind, clear boundary", "Agreeing instantly to avoid any discomfort", "Ignoring them completely"], correct: 1, explanation: "Honoring your personal limits with kindness protects your well-being and fosters authentic relationships." },
+  { category: "BOUNDARIES", question: "How do you handle saying 'no' to requests that drain your spirit?", answers: ["With guilt and endless apologies", "With calm confidence, knowing a 'no' to others is a loving 'yes' to myself", "By lying to avoid the conversation", "By feeling like a bad person"], correct: 1, explanation: "Saying no is a powerful affirmation of your priorities and a commitment to your mental peace." },
+  { category: "BOUNDARIES", question: "What role does protecting your peace play in your daily life?", answers: ["It is a luxury I cannot afford", "It is my highest priority and foundation for outward success", "It is secondary to everyone else's demands", "It happens only on weekends"], correct: 1, explanation: "Protecting your inner peace allows you to show up as your strongest, most grounded self." },
 
-  { category: "GEOGRAPHY", question: "What is the largest ocean on Earth?", answers: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"], correct: 2, explanation: "The Pacific Ocean is the largest and deepest ocean on Earth." },
-  { category: "GEOGRAPHY", question: "In which country is the ancient city of Petra?", answers: ["Egypt", "Jordan", "Greece", "Morocco"], correct: 1, explanation: "Petra is an ancient archaeological city in southern Jordan." },
-  { category: "GEOGRAPHY", question: "What is the capital of Japan?", answers: ["Kyoto", "Osaka", "Tokyo", "Hiroshima"], correct: 2, explanation: "Tokyo is the capital of Japan." },
-  { category: "GEOGRAPHY", question: "On which continent is the Sahara Desert?", answers: ["Asia", "South America", "Africa", "Australia"], correct: 2, explanation: "The Sahara is in North Africa and is the world's largest hot desert." },
+  { category: "PURPOSE", question: "When comparing your personal timeline to societal expectations, how do you ground yourself?", answers: ["I feel like I am falling behind", "I honor my own sacred pace; my journey cannot be rushed", "I stress over what others think of my status", "I rush recklessly to catch up"], correct: 1, explanation: "Your life is not a race against a clock. Honoring your sacred pace brings profound inner peace." },
+  { category: "PURPOSE", question: "What motivates your daily pursuits and long-term aspirations?", answers: ["Proving my worth to critics", "Fulfilling societal milestones to gain applause", "Aligning with my authentic passions and inner joy", "Fear of falling short"], correct: 2, explanation: "True fulfillment blooms when your actions align with your authentic values and joy." },
+  { category: "PURPOSE", question: "How do you approach discovering your unique gifts and talents?", answers: ["I assume I have none", "Through joyful curiosity, exploration, and self-expression", "By copying what successful people do", "By waiting for lightning to strike"], correct: 1, explanation: "Curiosity and playful exploration are your greatest tools for uncovering your unique brilliance." },
+  { category: "PURPOSE", question: "When you visualize your future, what feeling anchors your vision?", answers: ["Anxiety and uncertainty", "Excitement, alignment, and deep self-trust", "Doubt and hesitation", "Pressure and obligation"], correct: 1, explanation: "Visualizing your future with self-trust magnetizes the exact growth and joy you deserve." },
 
-  { category: "GENERAL KNOWLEDGE", question: "How many sides does a hexagon have?", answers: ["Five", "Six", "Seven", "Eight"], correct: 1, explanation: "A hexagon is a polygon with six sides." },
-  { category: "GENERAL KNOWLEDGE", question: "Which instrument measures temperature?", answers: ["Barometer", "Thermometer", "Compass", "Altimeter"], correct: 1, explanation: "A thermometer is used to measure temperature." },
-  { category: "GENERAL KNOWLEDGE", question: "How many players does a standard football team have on the field?", answers: ["Nine", "Ten", "Eleven", "Twelve"], correct: 2, explanation: "A standard association football team has eleven players, including the goalkeeper." },
-  { category: "GENERAL KNOWLEDGE", question: "Which language has the most native speakers worldwide?", answers: ["English", "Spanish", "Mandarin Chinese", "French"], correct: 2, explanation: "Mandarin Chinese has the largest number of native speakers worldwide." },
+  { category: "MINDFULNESS", question: "How do you anchor yourself when external criticism or opinions are loud?", answers: ["My self-worth is anchored internally; external opinions do not define my joy", "I let every criticism crush my confidence", "I retaliate defensively to every comment", "I absorb every negative word as absolute truth"], correct: 0, explanation: "When your worth is anchored within, external opinions lose their power to steal your peace." },
+  { category: "MINDFULNESS", question: "How do you experience the present moment during a busy day?", answers: ["Constantly rushing toward the next task", "Pausing to breathe and noticing the beauty in small details", "Living entirely in past regrets or future worries", "Feeling numb and detached"], correct: 1, explanation: "Pausing to breathe anchors you in the present, where your power and peace truly reside." },
+  { category: "MINDFULNESS", question: "What is your relationship with your inner critic?", answers: ["I obey its every command without question", "I observe it with gentle curiosity and reframe its voice with kindness", "I feed it with more self-judgment", "I pretend it doesn't exist while feeling miserable"], correct: 1, explanation: "Treating your inner critic with compassionate awareness transforms judgment into encouragement." },
+  { category: "MINDFULNESS", question: "How do you process heavy emotions when they arise?", answers: ["Suppressing them immediately", "Allowing myself to feel them fully without judgment, letting them flow through", "Drowning them out with distractions", "Blaming everyone around me"], correct: 1, explanation: "Allowing emotions to move through you without judgment is the key to emotional freedom." },
 
-  { category: "NATURE", question: "What is the fastest land animal?", answers: ["Lion", "Cheetah", "Leopard", "Ostrich"], correct: 1, explanation: "The cheetah is the fastest land animal." },
-  { category: "NATURE", question: "What is the largest animal known to have ever lived?", answers: ["African elephant", "Whale shark", "Blue whale", "Giraffe"], correct: 2, explanation: "The blue whale is the largest known animal ever to have lived." },
-  { category: "NATURE", question: "What do bees collect from flowers to make honey?", answers: ["Nectar", "Tree bark", "Sand", "Dew only"], correct: 0, explanation: "Worker bees collect nectar from flowers and transform it into honey." },
-  { category: "NATURE", question: "Which part of a plant absorbs water from the soil?", answers: ["Flower", "Leaves", "Roots", "Fruit"], correct: 2, explanation: "Roots absorb water and dissolved minerals from the soil." }
+  { category: "GROWTH", question: "How do you view challenges and obstacles on your path?", answers: ["As insurmountable roadblocks", "As gym sessions for my soul that build strength and wisdom", "As personal punishments", "As signs to quit immediately"], correct: 1, explanation: "Every obstacle is an opportunity to expand your strength, adaptability, and wisdom." },
+  { category: "GROWTH", question: "What does continuous personal evolution mean to you?", answers: ["Fixing everything 'broken' about me", "Unfolding into a truer, freer expression of who I really am", "Achieving perfection by a certain age", "Competing with everyone around me"], correct: 1, explanation: "Growth is not about fixing flaws; it is about uncovering and celebrating your truest self." },
+  { category: "GROWTH", question: "How do you approach learning new skills or stepping into the unknown?", answers: ["With dread because I might make mistakes", "With adventurous excitement, knowing curiosity beats perfection", "By avoiding anything uncomfortable", "By demanding perfection on the first try"], correct: 1, explanation: "Embracing beginner's mind opens doors to incredible growth and joyful discovery." },
+  { category: "GROWTH", question: "When you achieve a major goal, how do you integrate the victory?", answers: ["Immediately moving to the next stressful target without pausing", "Savoring the accomplishment, celebrating deeply, and thanking myself", "Downplaying it as luck", "Worrying about maintaining it"], correct: 1, explanation: "Savoring your victories honors your hard work and wires your brain for continuous success." }
 ];
 
-/* Cache all HTML elements once. */
 const $ = id => document.getElementById(id);
-const ui = {
-  start: $("start-screen"), quiz: $("quiz-screen"), results: $("results-screen"),
-  category: $("category"), difficulty: $("difficulty"), available: $("available"),
-  best: $("best-score"), bestResult: $("best-result"),
-  startBtn: $("start-btn"), restartBtn: $("restart-btn"), homeBtn: $("home-btn"), nextBtn: $("next-btn"), soundBtn: $("sound-btn"),
-  currentCategory: $("current-category"), timerBox: $("timer-box"), time: $("time"),
-  current: $("current"), total: $("total"), score: $("score"),
-  progressTrack: $("progress-track"), progressFill: $("progress-fill"),
-  question: $("question"), answers: $("answers"),
-  feedback: $("feedback"), feedbackIcon: $("feedback-icon"), feedbackTitle: $("feedback-title"), feedbackText: $("feedback-text"),
-  circle: $("score-circle"), percentage: $("percentage"), finalScore: $("final-score"), timeTaken: $("time-taken"),
-  resultTitle: $("result-title"), resultText: $("result-text"), resultCategory: $("result-category"), resultPace: $("result-pace"),
-  reviewCount: $("review-count"), reviewList: $("review-list"), year: $("year")
-};
 
 let round = [];
 let questionIndex = 0;
@@ -93,29 +72,39 @@ function formatTime(totalSeconds) {
 }
 
 function getQuestionPool() {
-  return roundCategory === "all"
-    ? [...QUESTIONS]
-    : QUESTIONS.filter(item => item.category === roundCategory);
+  const catSelect = $("category");
+  roundCategory = catSelect ? catSelect.value : "all";
+  return roundCategory === "all" ? [...QUESTIONS] : QUESTIONS.filter(item => item.category === roundCategory);
 }
 
 function updateAvailableCount() {
-  ui.available.textContent = String(Math.min(CONFIG.questionsPerRound, getQuestionPool().length));
+  const availableEl = $("available");
+  if (availableEl) {
+    availableEl.textContent = String(Math.min(CONFIG.questionsPerRound, getQuestionPool().length));
+  }
 }
 
-function showScreen(target) {
-  [ui.start, ui.quiz, ui.results].forEach(screen => screen.classList.remove("active"));
-  target.classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function showScreen(targetElement) {
+  const startScreen = $("start-screen");
+  const quizScreen = $("quiz-screen");
+  const resultsScreen = $("results-screen");
+
+  [startScreen, quizScreen, resultsScreen].forEach(screen => {
+    if (screen) screen.classList.remove("active");
+  });
+
+  if (targetElement) {
+    targetElement.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
-/* Local high-score storage. The game still works if storage is unavailable. */
 function loadBestScore() {
   try {
     const saved = localStorage.getItem(CONFIG.storageKey);
     const parsed = saved ? JSON.parse(saved) : null;
     bestRecord = parsed && Number.isFinite(parsed.percentage) && Number.isFinite(parsed.score) ? parsed : null;
   } catch (error) {
-    console.warn("Quiz Arena could not read the saved score:", error);
     bestRecord = null;
   }
   updateBestScoreDisplay();
@@ -123,25 +112,21 @@ function loadBestScore() {
 
 function updateBestScoreDisplay() {
   const label = bestRecord ? `${bestRecord.percentage}%` : "—";
-  ui.best.textContent = label;
-  ui.bestResult.textContent = label;
+  const bestEl = $("best-score");
+  const bestResEl = $("best-result");
+  if (bestEl) bestEl.textContent = label;
+  if (bestResEl) bestResEl.textContent = label;
 }
 
 function saveBestScore(percentage) {
-  const isBetter = !bestRecord ||
-    percentage > bestRecord.percentage ||
-    (percentage === bestRecord.percentage && score > bestRecord.score);
+  const isBetter = !bestRecord || percentage > bestRecord.percentage || (percentage === bestRecord.percentage && score > bestRecord.score);
   if (!isBetter) return;
-
   bestRecord = { percentage, score, total: round.length, savedAt: new Date().toISOString() };
   try {
     localStorage.setItem(CONFIG.storageKey, JSON.stringify(bestRecord));
-  } catch (error) {
-    console.warn("Quiz Arena could not save the score:", error);
-  }
+  } catch (error) {}
 }
 
-/* Optional sound effects are generated locally; no audio files are needed. */
 function playTone(frequency, duration = 0.1) {
   if (!soundEnabled) return;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -166,9 +151,11 @@ function playTone(frequency, duration = 0.1) {
 
 function toggleSound() {
   soundEnabled = !soundEnabled;
-  ui.soundBtn.textContent = soundEnabled ? "♪" : "♫";
-  ui.soundBtn.setAttribute("aria-pressed", String(soundEnabled));
-  ui.soundBtn.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
+  const soundBtn = $("sound-btn");
+  if (soundBtn) {
+    soundBtn.textContent = soundEnabled ? "♪" : "♫";
+    soundBtn.setAttribute("aria-pressed", String(soundEnabled));
+  }
   if (soundEnabled) playTone(660);
 }
 
@@ -182,7 +169,6 @@ function playAnswerSound(correct) {
   }
 }
 
-/* Timer uses a deadline so background tab throttling does not add time. */
 function stopTimer() {
   if (timerId !== null) {
     window.clearInterval(timerId);
@@ -191,8 +177,10 @@ function stopTimer() {
 }
 
 function updateTimerDisplay() {
-  ui.time.textContent = String(secondsLeft);
-  ui.timerBox.classList.toggle("urgent", secondsLeft <= 5);
+  const timeEl = $("time");
+  const timerBoxEl = $("timer-box");
+  if (timeEl) timeEl.textContent = String(secondsLeft);
+  if (timerBoxEl) timerBoxEl.classList.toggle("urgent", secondsLeft <= 5);
 }
 
 function startTimer() {
@@ -214,15 +202,18 @@ function startTimer() {
 function updateProgress(completed = false) {
   const done = questionIndex + (completed ? 1 : 0);
   const percentage = round.length ? Math.round(done / round.length * 100) : 0;
-  ui.progressFill.style.width = `${percentage}%`;
-  ui.progressTrack.setAttribute("aria-valuenow", String(percentage));
+  const progressFill = $("progress-fill");
+  const progressTrack = $("progress-track");
+  if (progressFill) progressFill.style.width = `${percentage}%`;
+  if (progressTrack) progressTrack.setAttribute("aria-valuenow", String(percentage));
 }
 
-/* This function is connected directly to the Start Challenge button. */
 function startGame() {
   stopTimer();
-  roundCategory = ui.category.value;
-  roundDifficulty = ui.difficulty.value;
+  const catSelect = $("category");
+  const diffSelect = $("difficulty");
+  roundCategory = catSelect ? catSelect.value : "all";
+  roundDifficulty = diffSelect ? diffSelect.value : "medium";
 
   const pool = shuffle(getQuestionPool());
   round = pool.slice(0, CONFIG.questionsPerRound).map(item => ({
@@ -233,19 +224,20 @@ function startGame() {
     })))
   }));
 
-  if (round.length === 0) {
-    console.error("Quiz Arena: no questions were found for this category.");
-    return;
-  }
+  if (round.length === 0) return;
 
   questionIndex = 0;
   score = 0;
   locked = false;
   mistakes = [];
   roundStartedAt = Date.now();
-  ui.score.textContent = "0";
-  ui.total.textContent = String(round.length);
-  showScreen(ui.quiz);
+  
+  const scoreEl = $("score");
+  const totalEl = $("total");
+  if (scoreEl) scoreEl.textContent = "0";
+  if (totalEl) totalEl.textContent = String(round.length);
+  
+  showScreen($("quiz-screen"));
   renderQuestion();
 }
 
@@ -254,18 +246,34 @@ function renderQuestion() {
   locked = false;
   const question = round[questionIndex];
 
-  ui.current.textContent = String(questionIndex + 1).padStart(2, "0");
-  ui.total.textContent = String(round.length).padStart(2, "0");
-  ui.currentCategory.textContent = question.category;
-  ui.question.textContent = question.question;
-  ui.score.textContent = String(score);
-  ui.answers.replaceChildren();
-  ui.feedback.hidden = true;
-  ui.feedback.className = "feedback";
-  ui.nextBtn.hidden = true;
-  ui.nextBtn.innerHTML = questionIndex === round.length - 1
-    ? 'See results <span aria-hidden="true">↗</span>'
-    : 'Next question <span aria-hidden="true">→</span>';
+  const currentEl = $("current");
+  const totalEl = $("total");
+  const currentCatEl = $("current-category");
+  const questionEl = $("question");
+  const scoreEl = $("score");
+  const answersEl = $("answers");
+  const feedbackEl = $("feedback");
+  const nextBtnEl = $("next-btn");
+
+  if (currentEl) currentEl.textContent = String(questionIndex + 1).padStart(2, "0");
+  if (totalEl) totalEl.textContent = String(round.length).padStart(2, "0");
+  if (currentCatEl) currentCatEl.textContent = question.category;
+  if (questionEl) questionEl.textContent = question.question;
+  if (scoreEl) scoreEl.textContent = String(score);
+  if (answersEl) answersEl.replaceChildren();
+  
+  if (feedbackEl) {
+    feedbackEl.hidden = true;
+    feedbackEl.className = "feedback";
+  }
+  
+  if (nextBtnEl) {
+    nextBtnEl.hidden = true;
+    nextBtnEl.innerHTML = questionIndex === round.length - 1
+      ? 'See results <span aria-hidden="true">↗</span>'
+      : 'Next question <span aria-hidden="true">→</span>';
+  }
+  
   updateProgress(false);
 
   question.answers.forEach((answer, answerIndex) => {
@@ -284,10 +292,10 @@ function renderQuestion() {
 
     button.append(letter, text);
     button.addEventListener("click", () => submitAnswer(answerIndex, false));
-    ui.answers.appendChild(button);
+    if (answersEl) answersEl.appendChild(button);
   });
 
-  ui.question.focus({ preventScroll: true });
+  if (questionEl) questionEl.focus({ preventScroll: true });
   startTimer();
 }
 
@@ -301,15 +309,19 @@ function submitAnswer(selectedIndex, timedOut = false) {
   const selectedAnswer = selectedIndex === null ? null : question.answers[selectedIndex];
   const isCorrect = Boolean(selectedAnswer && selectedAnswer.correct);
 
-  [...ui.answers.children].forEach((button, answerIndex) => {
-    button.disabled = true;
-    if (question.answers[answerIndex].correct) button.classList.add("correct");
-    if (answerIndex === selectedIndex && !isCorrect) button.classList.add("wrong");
-  });
+  const answersEl = $("answers");
+  if (answersEl) {
+    [...answersEl.children].forEach((button, answerIndex) => {
+      button.disabled = true;
+      if (question.answers[answerIndex].correct) button.classList.add("correct");
+      if (answerIndex === selectedIndex && !isCorrect) button.classList.add("wrong");
+    });
+  }
 
   if (isCorrect) {
     score += 1;
-    ui.score.textContent = String(score);
+    const scoreEl = $("score");
+    if (scoreEl) scoreEl.textContent = String(score);
   } else {
     mistakes.push({
       question: question.question,
@@ -321,29 +333,39 @@ function submitAnswer(selectedIndex, timedOut = false) {
 
   showFeedback(isCorrect, timedOut, correctAnswer.text, question.explanation);
   updateProgress(true);
-  ui.nextBtn.hidden = false;
+  
+  const nextBtnEl = $("next-btn");
+  if (nextBtnEl) nextBtnEl.hidden = false;
+  
   playAnswerSound(isCorrect);
 }
 
 function showFeedback(isCorrect, timedOut, correctAnswer, explanation) {
-  ui.feedback.hidden = false;
-  ui.feedback.className = "feedback";
+  const feedbackEl = $("feedback");
+  if (!feedbackEl) return;
+  
+  feedbackEl.hidden = false;
+  feedbackEl.className = "feedback";
+
+  const iconEl = $("feedback-icon");
+  const titleEl = $("feedback-title");
+  const textEl = $("feedback-text");
 
   if (isCorrect) {
-    ui.feedback.classList.add("good");
-    ui.feedbackIcon.textContent = "✓";
-    ui.feedbackTitle.textContent = "Excellent! Correct answer.";
-    ui.feedbackText.textContent = explanation;
+    feedbackEl.classList.add("good");
+    if (iconEl) iconEl.textContent = "✓";
+    if (titleEl) titleEl.textContent = "Beautiful insight! Perfectly aligned.";
+    if (textEl) textEl.textContent = explanation;
   } else if (timedOut) {
-    ui.feedback.classList.add("timeout");
-    ui.feedbackIcon.textContent = "◷";
-    ui.feedbackTitle.textContent = "Time is up!";
-    ui.feedbackText.textContent = `The correct answer is ${correctAnswer}. ${explanation}`;
+    feedbackEl.classList.add("timeout");
+    if (iconEl) iconEl.textContent = "◷";
+    if (titleEl) titleEl.textContent = "Time is up!";
+    if (textEl) textEl.textContent = `The empowering choice is: ${correctAnswer}. ${explanation}`;
   } else {
-    ui.feedback.classList.add("bad");
-    ui.feedbackIcon.textContent = "×";
-    ui.feedbackTitle.textContent = "Not quite. Keep going!";
-    ui.feedbackText.textContent = `The correct answer is ${correctAnswer}. ${explanation}`;
+    feedbackEl.classList.add("bad");
+    if (iconEl) iconEl.textContent = "×";
+    if (titleEl) titleEl.textContent = "A wonderful learning moment.";
+    if (textEl) textEl.textContent = `The empowering choice is: ${correctAnswer}. ${explanation}`;
   }
 }
 
@@ -356,33 +378,41 @@ function nextQuestion() {
 
 function showResults() {
   stopTimer();
-  showScreen(ui.results);
+  showScreen($("results-screen"));
 
   const percentage = Math.round(score / round.length * 100);
   const elapsedSeconds = Math.floor((Date.now() - roundStartedAt) / 1000);
 
-  ui.percentage.textContent = `${percentage}%`;
-  ui.finalScore.textContent = `${score}/${round.length}`;
-  ui.timeTaken.textContent = formatTime(elapsedSeconds);
-  ui.circle.style.setProperty("--score-angle", `${percentage * 3.6}deg`);
-  ui.resultCategory.textContent = roundCategory === "all" ? "ALL CATEGORIES" : roundCategory;
-  ui.resultPace.textContent = `${roundDifficulty.toUpperCase()} PACE`;
+  const percentageEl = $("percentage");
+  const finalScoreEl = $("final-score");
+  const timeTakenEl = $("time-taken");
+  const circleEl = $("score-circle");
+  const resCatEl = $("result-category");
+  const resPaceEl = $("result-pace");
+  const resTitleEl = $("result-title");
+  const resTextEl = $("result-text");
 
-  if (percentage === 100) {
-    ui.resultTitle.textContent = "Absolutely flawless!";
-    ui.resultText.textContent = "You conquered every question. A perfect round!";
-  } else if (percentage >= 80) {
-    ui.resultTitle.textContent = "You're on fire!";
-    ui.resultText.textContent = "An outstanding performance. Your knowledge is showing.";
-  } else if (percentage >= 60) {
-    ui.resultTitle.textContent = "Strong effort!";
-    ui.resultText.textContent = "You're getting there. One more round could make all the difference.";
-  } else if (percentage >= 40) {
-    ui.resultTitle.textContent = "Good start!";
-    ui.resultText.textContent = "Every question is a lesson. Keep practising and beat this score.";
-  } else {
-    ui.resultTitle.textContent = "Your comeback starts now!";
-    ui.resultText.textContent = "Stay curious, learn from the replay and come back stronger.";
+  if (percentageEl) percentageEl.textContent = `${percentage}%`;
+  if (finalScoreEl) finalScoreEl.textContent = `${score}/${round.length}`;
+  if (timeTakenEl) timeTakenEl.textContent = formatTime(elapsedSeconds);
+  if (circleEl) circleEl.style.setProperty("--score-angle", `${percentage * 3.6}deg`);
+  if (resCatEl) resCatEl.textContent = roundCategory === "all" ? "ALL CATEGORIES" : roundCategory;
+  if (resPaceEl) resPaceEl.textContent = `${roundDifficulty.toUpperCase()} PACE`;
+
+  if (resTitleEl && resTextEl) {
+    if (percentage === 100) {
+      resTitleEl.textContent = "Radiant Soul Level!";
+      resTextEl.textContent = "You radiate deep self-approval, emotional resilience, and authentic grace.";
+    } else if (percentage >= 80) {
+      resTitleEl.textContent = "Growing Bloom Level!";
+      resTextEl.textContent = "You are on a powerful, beautiful journey of self-discovery and acceptance.";
+    } else if (percentage >= 60) {
+      resTitleEl.textContent = "Tender Awakening Level!";
+      resTextEl.textContent = "You are embracing a transformative chapter of radical self-love.";
+    } else {
+      resTitleEl.textContent = "Your sacred journey continues!";
+      resTextEl.textContent = "Every reflection is a step closer to unshakeable self-approval.";
+    }
   }
 
   saveBestScore(percentage);
@@ -391,14 +421,18 @@ function showResults() {
 }
 
 function renderReview() {
-  ui.reviewList.replaceChildren();
-  ui.reviewCount.textContent = mistakes.length === 1 ? "1 to review" : `${mistakes.length} to review`;
+  const reviewList = $("review-list");
+  const reviewCount = $("review-count");
+  if (!reviewList || !reviewCount) return;
+  
+  reviewList.replaceChildren();
+  reviewCount.textContent = mistakes.length === 1 ? "1 to review" : `${mistakes.length} to review`;
 
   if (mistakes.length === 0) {
     const message = document.createElement("div");
     message.className = "perfect-message";
-    message.textContent = "Perfect score! Every answer was correct. Nothing to review — enjoy your victory!";
-    ui.reviewList.appendChild(message);
+    message.textContent = "Flawless reflection! Every choice aligned with deep self-approval.";
+    reviewList.appendChild(message);
     return;
   }
 
@@ -411,47 +445,81 @@ function renderReview() {
 
     const userLine = document.createElement("p");
     userLine.className = "review-user";
-    userLine.textContent = `Your answer: ${item.userAnswer}`;
+    userLine.textContent = `Your choice: ${item.userAnswer}`;
 
     const correctLine = document.createElement("p");
     correctLine.className = "review-correct";
-    correctLine.textContent = `Correct answer: ${item.correctAnswer}`;
+    correctLine.textContent = `Empowered choice: ${item.correctAnswer}`;
 
     const explanation = document.createElement("p");
     explanation.className = "review-explanation";
     explanation.textContent = item.explanation;
 
     article.append(heading, userLine, correctLine, explanation);
-    ui.reviewList.appendChild(article);
+    reviewList.appendChild(article);
   });
 }
 
 function goHome() {
   stopTimer();
-  showScreen(ui.start);
+  showScreen($("start-screen"));
   updateAvailableCount();
   updateBestScoreDisplay();
 }
 
 function initializeQuizArena() {
-  /* Fail clearly rather than silently leaving the Start button dead. */
-  const requiredElements = Object.entries(ui).filter(([, element]) => !element);
-  if (requiredElements.length) {
-    console.error("Quiz Arena is missing these HTML elements:", requiredElements.map(([name]) => name));
-    return;
-  }
-
-  ui.year.textContent = String(new Date().getFullYear());
+  const yearEl = $("year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+  
   loadBestScore();
   updateAvailableCount();
 
-  ui.startBtn.addEventListener("click", startGame);
-  ui.restartBtn.addEventListener("click", startGame);
-  ui.homeBtn.addEventListener("click", goHome);
-  ui.nextBtn.addEventListener("click", nextQuestion);
-  ui.soundBtn.addEventListener("click", toggleSound);
-  ui.category.addEventListener("change", updateAvailableCount);
+  const startBtn = $("start-btn");
+  const restartBtn = $("restart-btn");
+  const homeBtn = $("home-btn");
+  const nextBtn = $("next-btn");
+  const soundBtn = $("sound-btn");
+  const categorySelect = $("category");
+
+  if (startBtn) {
+    startBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      startGame();
+    });
+  }
+  
+  if (restartBtn) {
+    restartBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      startGame();
+    });
+  }
+  
+  if (homeBtn) {
+    homeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      goHome();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      nextQuestion();
+    });
+  }
+  
+  if (soundBtn) {
+    soundBtn.addEventListener("click", toggleSound);
+  }
+  
+  if (categorySelect) {
+    categorySelect.addEventListener("change", updateAvailableCount);
+  }
 }
 
-/* scripts.js is loaded with defer, so the HTML is ready here. */
-initializeQuizArena();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeQuizArena);
+} else {
+  initializeQuizArena();
+}
